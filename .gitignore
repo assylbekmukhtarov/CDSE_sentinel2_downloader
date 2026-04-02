@@ -1,0 +1,9 @@
+.env
+.claude/
+__pycache__/
+*.pyc
+*.ipynb
+venv/
+test_krasnodar/
+response.json
+.vscode/

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Polygon Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { width: 100vw; height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // Bounding box -> polygon
+    const bounds = {
+      north: 47.31555190588103,
+      south: 44.046203268457674,
+      east: 44.48415756225587,
+      west: 39.00833129882813};
+
+    // Конвертируем bbox в координаты полигона [lat, lng] для Leaflet
+    const coords = undefined; // не используется
+
+    const { east, north, south, west } = bounds;
+    const latLngs = [
+      [south, west],
+      [north, west],
+      [north, east],
+      [south, east],
+    ];
+
+    const map = L.map('map').setView([(north + south) / 2, (east + west) / 2], 10);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const polygon = L.polygon(latLngs, {
+      color: '#e63946',
+      weight: 2,
+      fillColor: '#e63946',
+      fillOpacity: 0.2
+    }).addTo(map);
+
+    map.fitBounds(polygon.getBounds(), { padding: [40, 40] });
+  </script>
+</body>
+</html>
